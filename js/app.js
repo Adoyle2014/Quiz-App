@@ -1,39 +1,62 @@
 $(document).ready(function() {
-
 quizInit();	
 });
 
+
+
+
+
 function quizInit() {	
 
-	$("#progressbar h1").click(function() {
+$("#progressbar h1").click(function() {	
+	glStartClick = 1	
 
-		FadeOutIn(("#questionbox > p"), PopData(("#questionbox > p"), question1.question));
-	});
+	QFadeOutIn("#questionbox > p", question1.question);
+	AFadeOutIn("#answer", question1.answers);	
+	$("#answerbox div").toggleClass("answer");
+	glStartClick++
+	});	
 }
 
-function PopData(element, data) {
-		$(element).text(data);
-	}
 
-/*--------------------Fade in/Fade out Animation--------------*/
 
-function FadeOutIn(elOut, elIn) {
-		$(elOut).animate({
-			opacity: 0.0
-		}, 1000, function() {
-			$(elIn).animate({
-				opacity: 1.0
-			}, 1000);
-		});
-	}
+/*--------------------Fade Out/Fade In Animation--------------*/
+
+function QFadeOutIn(qel, qtext) {	
+	$(qel).animate({
+        opacity: 0.0
+    	}, 1000, function() {                        
+        	$(qel).text(qtext).animate({
+            		opacity: 1.0
+        		}, 1000, function() {            
+        	});
+     	});
+}
+
+function AFadeOutIn(ael, atext) {	
+	var answerCount = 1;
+
+	for(var i = 0; i < atext.length; i++) {
+		$(ael + answerCount).text(atext[i]);		
+		answerCount++;		
+	};				
+	$("#answerbox p").animate({
+     		opacity: 0.0
+ 			}, 1000, function() {  	     		           
+     			$("#answerbox p").animate({
+         			opacity: 1.0
+     			}, 1000, function() {            
+     		});
+     	});		
+}   
 
 
 /*-------------------Question Functions---------------------------*/
 
 function QuestionBlock(question, answers, correct) {
 	this.question = question;
-	this.answers = [];
-	this.correct = "crap";
+	this.answers = answers;
+	this.correct = correct;
 }
 
 var question1 = new QuestionBlock(
@@ -44,7 +67,7 @@ var question1 = new QuestionBlock(
 	'$("p").css("background-color","red");',
 	'$("p").layout("background-color","red");'
 	],
-	3);
+	2);
 
 var question2 = new QuestionBlock(
 	'With jQuery, look at the following selector: $("div.intro"). What does it select?',
