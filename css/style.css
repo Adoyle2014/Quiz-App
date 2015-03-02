@@ -104,10 +104,12 @@ body {
 
 .userfeedbackred {
 	background-color: #ff0505;
+	opacity: 0;
 }
 
 .userfeedbackgreen {
 	background-color: #02ff06;
+	opacity: 0;
 }
 
 
